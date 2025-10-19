@@ -1,0 +1,4 @@
+VidStock
+--------
+
+Video Sharing platform
