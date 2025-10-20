@@ -1,6 +1,6 @@
 
 import { Router } from "express";
-import { isRequestAuthenticated } from "../utils/authutils";
+import { isRequestAuthenticated } from "../utils/authutils.js";
 
 const commentRouter = Router();
 
