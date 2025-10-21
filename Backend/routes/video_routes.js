@@ -2,6 +2,7 @@
 import { Router } from "express";
 import { isRequestAuthenticated } from "../utils/authutils.js";
 import multer from "multer";
+import { uploadVideo } from "../services/videoServices.js";
 
 const videoRouter = Router();
 
@@ -20,7 +21,7 @@ const upload = multer({ storage: storage })
 videoRouter.get("/", (req, res) => {
     res.send("login");
 });
-videoRouter.post("/", isRequestAuthenticated, upload.single('video'), (req, res) => {
+videoRouter.post("/", isRequestAuthenticated, upload.single('video'), uploadVideo, (req, res) => {
     console.log(req.file);
     res.json({
         status : "success",

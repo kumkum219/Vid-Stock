@@ -1,6 +1,5 @@
 import { createmysqlconnection } from "../utils/dbutil.js";
 import jwt from 'jsonwebtoken';
-import { json } from "express";
 
 
 export async function createUser(req, res) {
