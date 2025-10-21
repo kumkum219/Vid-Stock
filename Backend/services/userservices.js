@@ -1,4 +1,8 @@
 import { createmysqlconnection } from "../utils/dbutil.js";
+import jwt from 'jsonwebtoken';
+import { json } from "express";
+
+
 export async function createUser(req, res) {
     let username = req.body.username;
     let password = req.body.password;
@@ -8,29 +12,39 @@ export async function createUser(req, res) {
 
     console.log("users result = ", results);
     res.json({
-        status : "success",
-        msg : "user signup successfully"
+        status: "success",
+        msg: "user signup successfully"
     });
 };
 
 
-export async function verifyUser(req , res) {
+export async function verifyUser(req, res) {
     let username = req.body.username;
     let password = req.body.password;
 
     const conn = await createmysqlconnection();
-    const [results, fields] = await conn.execute("SELECT uid , username from users WHERE username = ? AND password = ?" ,[username , password]);
+    const [results, fields] = await conn.execute("SELECT uid , username from users WHERE username = ? AND password = ?", [username, password]);
+
+
+    if (results.length == 0) {
+        res.json({
+            status: "failed",
+            msg: "wrong users detailed"
+        }); 
+        return;
+    }
+
+    const uid = results[0]["uid"];
+    const cusername = results[0]["username"];
+
+    const JWT_SECRET = process.env.JWT_SECRET;
+    const resJwt = jwt.sign({ username: cusername, uid: uid }, JWT_SECRET);
 
     console.log("users result = ", results);
-    if(results.length == 1){
-        res.json({
-        status : "success",
-        msg : "user logged in successfully"
+    res.json({
+        status: "success",
+        msg: "user logged in successfully",
+        data: resJwt
     });
-    }else {
-        res.json({
-        status : "failed",
-        msg : "wrong users detailed"
-    });
-    }
+
 };
