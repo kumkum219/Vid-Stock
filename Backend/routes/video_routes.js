@@ -1,8 +1,16 @@
 
-import { Router } from "express";
+import express, { Router } from "express";
 import { isRequestAuthenticated } from "../utils/authutils.js";
 import multer from "multer";
-import { uploadVideo } from "../services/videoServices.js";
+import { getVideoName, uploadVideo } from "../services/videoServices.js";
+import path from "path";
+import { fileURLToPath } from "url";
+
+
+const uploadPath = path.join(process.cwd(), "uploads");
+
+console.log({uploadPath,});
+
 
 const videoRouter = Router();
 
@@ -18,9 +26,7 @@ const storage = multer.diskStorage({
 
 const upload = multer({ storage: storage })
 
-videoRouter.get("/", (req, res) => {
-    res.send("login");
-});
+videoRouter.use("/", express.static(uploadPath));
 videoRouter.post("/", isRequestAuthenticated, upload.single('video'), uploadVideo, (req, res) => {
     console.log(req.file);
     res.json({
@@ -28,6 +34,8 @@ videoRouter.post("/", isRequestAuthenticated, upload.single('video'), uploadVide
         msg : "user signup successfully"
     });
 });
+
+videoRouter.get("/", getVideoName);
 
 
 

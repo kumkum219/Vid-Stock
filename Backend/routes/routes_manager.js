@@ -7,7 +7,7 @@ import { isRequestAuthenticated } from "../utils/authutils.js";
 
 const routerManager = Router();
 
-routerManager.use("/like", isRequestAuthenticated , likeRouter);
+routerManager.use("/like" , likeRouter);
 routerManager.use("/comment" , commentRouter);
 routerManager.use("/user" , userRouter);
 routerManager.use("/video" , videoRouter);

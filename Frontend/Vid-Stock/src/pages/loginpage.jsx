@@ -1,5 +1,7 @@
 import { useState } from "react"
 
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+
 export function LoginPage() {
     const [username, setUsername] = useState("");
     const [password, setPassword] = useState("");
@@ -11,7 +13,7 @@ export function LoginPage() {
             "password": password
         }
 
-        let reps = await fetch("http://localhost:3000/api/v1/user/login", {
+        let reps = await fetch(`${BACKEND_URL}/api/v1/user/login`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -39,7 +41,7 @@ export function LoginPage() {
             "password": password
         }
 
-        let reps = await fetch("http://localhost:3000/api/v1/user/", {
+        let reps = await fetch(`${BACKEND_URL}/api/v1/user/`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
@@ -60,7 +62,7 @@ export function LoginPage() {
     };
 
     return <div className="cont">
-        <form className="login-form">
+        <form className="form">
             <div className="input-cont">
                 <label>Username</label>
                 <input type="text" onChange={(e) => (setUsername(e.target.value))} value={username}></input>

@@ -2,7 +2,7 @@
 CREATE DATABASE vidstock_db;
 
 CREATE TABLE users(uid INT AUTO_INCREMENT PRIMARY KEY , username VARCHAR(255) UNIQUE, password VARCHAR(255) );
-CREATE TABLE videos(vid INT AUTO_INCREMENT PRIMARY KEY, uid INT, likes INT DEFAULT 0, name TEXT);
+CREATE TABLE videos(vid INT AUTO_INCREMENT PRIMARY KEY, uid INT, likes INT DEFAULT 0, location TEXT, videoname Text);
 CREATE TABLE comments(cid INT AUTO_INCREMENT PRIMARY KEY, vid INT, uid INT, text TEXT);
 
 
@@ -17,4 +17,8 @@ UPDATE videos SET likes = likes + 1 WHERE vid = ?;
 UPDATE videos SET likes = likes - 1 WHERE vid = ?;
 
 INSERT INTO comments(vid , uid , text) VALUES(? , ? , ?);
+
+SELECT username, text, cid FROM comments JOIN users ON comments.uid = users.uid where comments.uid = ?;
+
+SELECT location FROM videos WHERE vid = ?
 ```

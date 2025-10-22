@@ -1,13 +1,11 @@
 
 import { Router } from "express";
 import { isRequestAuthenticated } from "../utils/authutils.js";
-import { addComment } from "../services/commentservice.js";
+import { addComment, loadComment } from "../services/commentservice.js";
 
 const commentRouter = Router();
 
-commentRouter.get("/" , (req , res) => {
-    res.send("cooment");
-});
+commentRouter.get("/" , loadComment);
 commentRouter.post("/" , isRequestAuthenticated , addComment);
 
 export default commentRouter;
