@@ -6,14 +6,24 @@ export async function createUser(req, res) {
     let username = req.body.username;
     let password = req.body.password;
 
-    const conn = await createmysqlconnection();
-    const [results, fields] = await conn.execute("INSERT INTO users(username , password) values(? , ?)", [username, password]);
+    try {
+        const conn = await createmysqlconnection();
+        const [results, fields] = await conn.execute("INSERT INTO users(username , password) values(? , ?)", [username, password]);
 
-    console.log("users result = ", results);
-    res.json({
-        status: "success",
-        msg: "user signup successfully"
-    });
+        console.log("users result = ", results);
+        res.json({
+            status: "success",
+            msg: "user signup successfully"
+        });
+
+    }
+    catch (err) {
+        console.error(err);
+        res.json({
+            status: "failed",
+            msg: "user signup failed"
+        });
+    }
 };
 
 
@@ -29,7 +39,7 @@ export async function verifyUser(req, res) {
         res.json({
             status: "failed",
             msg: "wrong users detailed"
-        }); 
+        });
         return;
     }
 

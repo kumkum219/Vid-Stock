@@ -11,4 +11,10 @@ INSERT INTO users(username , password) values(? , ?);
 SELECT uid , username from users WHERE username = ? AND password = ?;
 
 INSERT INTO videos(uid, name) values(?, ?);
+
+UPDATE videos SET likes = likes + 1 WHERE vid = ?;
+
+UPDATE videos SET likes = likes - 1 WHERE vid = ?;
+
+INSERT INTO comments(vid , uid , text) VALUES(? , ? , ?);
 ```
