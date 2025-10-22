@@ -2,6 +2,8 @@ import express from 'express'
 import { Router } from 'express'
 import routerManager from './routes/routes_manager.js'
 import dotenv from 'dotenv'
+import cors from 'cors'
+
 
 dotenv.config();
 
@@ -12,6 +14,7 @@ const PORT = 3000;
 
 const app = express()
 const router = Router()
+app.use(cors());
 
 app.use(express.json());
 
