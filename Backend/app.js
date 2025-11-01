@@ -3,14 +3,15 @@ import { Router } from 'express'
 import routerManager from './routes/routes_manager.js'
 import dotenv from 'dotenv'
 import cors from 'cors'
+import path from 'path'
 
 
 dotenv.config();
 
 console.log(process.env.JWT_SECRET);
 
-
-const PORT = 3000;
+const PORT = process.env.PORT || 8080;
+const FRONTEND_PATH = path.join(process.cwd(), "frontend");
 
 const app = express()
 const router = Router()
@@ -18,11 +19,12 @@ app.use(cors());
 
 app.use(express.json());
 
-app.get('/', (req, res) => {
-  res.send('Hello World')
-})
+// app.get('/', (req, res) => {
+//   res.send('Hello World')
+// })
 
 app.use("/api/v1", routerManager);
+app.use("/", express.static(FRONTEND_PATH));
 
 app.listen(PORT , ()=> {
   console.log("App listening on port : " + PORT);

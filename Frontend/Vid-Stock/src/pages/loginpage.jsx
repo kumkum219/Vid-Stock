@@ -1,6 +1,6 @@
 import { useState } from "react"
 
-const BACKEND_URL = import.meta.env.VITE_BACKEND_URL;
+const BACKEND_URL = import.meta.env.VITE_BACKEND_URL || "";
 
 export function LoginPage() {
     const [username, setUsername] = useState("");
