@@ -23,8 +23,12 @@ app.use(express.json());
 //   res.send('Hello World')
 // })
 
+
 app.use("/api/v1", routerManager);
-app.use("/", express.static(FRONTEND_PATH));
+app.use(express.static(FRONTEND_PATH));
+app.use((req, res) => {
+  res.sendFile(path.join(FRONTEND_PATH, "index.html"));
+});
 
 app.listen(PORT , ()=> {
   console.log("App listening on port : " + PORT);
